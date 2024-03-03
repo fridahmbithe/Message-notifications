@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" >
+    <link rel="stylesheet" href="messages.css">
+
+<body>
+    <section class="msger">
+        <main class="msger-chat">
+            <div class="msg left-msg">
+                <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">
+                </div>
+                <div class="msg-bubble" id="message-item">
+                    <!-- this is where the message clicked will be dsplayed just reference the id -->
+                </div>
+            </div>
+        </main>
+        <form class="msger-inputarea">
+            <input type="text" class="msger-input" placeholder="Enter your message...">
+            <button type="submit" class="msger-send-btn">Send</button>
+          </form>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messageForm = document.getElementById('message-form');
+            const messageText = document.getElementById('message-text');
+            const messageList = document.getElementById('message-item');
+
+            // Extract message content from URL the notifications window
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageContent = urlParams.get('message');
+            if (messageContent) {
+                displayMessage(messageContent);
+            }
+            // Function to display a received message
+            function displayMessage(message) {
+                const messageItem = document.createElement('div');
+                messageItem.classList.add('message-item');
+                messageItem.textContent = message;
+                messageList.appendChild(messageItem);
+            }
+            console.log("this is the ", messageItem);
+
+            // Function to send a message
+            messageForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const newMessage = messageText.value;
+                if (newMessage.trim() !== '') {
+                    displayMessage(newMessage);
+                    messageText.value = '';
+                } else {
+                    alert('Please enter a message.');
+                }
+            });
+            console.log(newMessage);
+
+
+            
+        });
+    </script>
+
+</body>
+
+</html>

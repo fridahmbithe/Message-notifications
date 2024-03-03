@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+    <link rel="stylesheet" href="index.css">
+
+    <title>Notifications project</title>
+
+<body>
+    <div class="container">
+        <div class="notificationcontainer">
+            <header>
+                <div class="notificationheader">
+                    <h3>Notifications</h3>
+                    <span id="num-of-notification"></span>
+                </div>
+                <p id="mark-as-read">Mark All as Read</p>
+            </header>
+            <main id="notification-list" class="unread.dot">
+
+            </main>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const messages = [
+            { content: 'Hello Fridah, you have a new task kindly go through it and let me know if you have any questions.' },
+            { content: 'Hello Fridah, you have a new task kindly go through it and let me know if you have any questions.' },
+            { content: 'Hello Fridah, you have a new task kindly go through it and let me know if you have any questions.' },
+            { content: 'Hello Fridah, you have a new task kindly go through it and let me know if you have any questions.' },
+            { content: 'Hello Fridah, you have a new task kindly go through it and let me know if you have any questions.' },
+        ];
+
+        // function generateNotificationCards() {
+        //     const notificationList = document.getElementById('notification-list');
+        //     messages.forEach((message, index) => {
+        //         const notificationCard = document.createElement('div');
+        //         notificationCard.classList.add('notificationCard', 'unread');
+        //         if (message.unread) {
+        //             notificationCard.classList.add('unread');
+        //             const dot = document.createElement('span');
+        //             dot.classList.add('unread-dot');
+        //             notificationCard.appendChild(dot);
+        //         }
+        //         notificationCard.textContent = message.content;
+        //         notificationCard.onclick = function () {
+        //             this.classList.remove('unread');
+        //             this.classList.add('read');
+        //             openChatWindow(message.content);
+        //         };
+        //         notificationCard.onclick = () => openChatWindow(message.content);
+        //         notificationCard.textContent = message.content;
+        //         notificationList.appendChild(notificationCard);            });
+        // }
+
+
+        function generateNotificationCards() {
+            const notificationList = document.getElementById('notification-list');
+            messages.forEach((message, index) => {
+                const notificationCard = document.createElement('div');
+                notificationCard.classList.add('notificationCard','unread');
+                if (message.unread) {
+                    notificationCard.classList.add('unread');
+                    const dot = document.createElement('span');
+                    dot.classList.add('unread-dot');
+                    notificationCard.appendChild(dot);
+                }
+                notificationCard.onclick = () => openChatWindow(message.content);
+                notificationCard.textContent = message.content;
+                notificationList.appendChild(notificationCard);
+            });
+        }
+
+        generateNotificationCards();
+
+        const unReadMessages = document.querySelectorAll('.unread');
+        const unReadMessagesCount = unReadMessages.length;
+        const notificationBadge = document.getElementById('num-of-notification');
+        notificationBadge.textContent = unReadMessagesCount;
+
+        const markAll = document.getElementById('mark-as-read');
+        markAll.addEventListener('click', () => {
+            unReadMessages.forEach(message => {
+                message.classList.remove('unread');
+                message.classList.add('read');
+            });
+
+            // Update the count to zero
+            notificationBadge.textContent = '0';
+        });
+        // function generateNotificationCards() {
+        //         const notificationList = document.getElementById('notification-list');
+        //         messages.forEach((message, index) => {
+        //             const notificationCard = document.createElement('div');
+        //             notificationCard.classList.add('notificationCard', 'unread');
+        //             notificationCard.onclick = () => openChatWindow(message.content);
+        //             notificationCard.textContent = message.content;
+        //             notificationList.appendChild(notificationCard);
+        //         });
+        //     }
+
+        function openChatWindow(messageContent) {
+                const chatUrl = `./messages.html?message=${encodeURIComponent(messageContent)}`;
+                window.location.href = chatUrl;
+            }
+            // generateNotificationCards();
+
+    });
+
+</script>
+</script>
+</head>
+
+
+</html>
