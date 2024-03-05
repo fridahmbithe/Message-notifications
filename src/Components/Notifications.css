@@ -1,0 +1,115 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(236, 238, 239);
+  overflow-y: auto;
+
+}
+
+.notificationcontainer{
+  background-color: #fff;
+  width: 90%;
+  padding: 0.5rem 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+
+}
+header {
+  display: grid;
+  grid-template-columns: auto auto; 
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+}
+
+.notificationheader {
+  display: flex;
+  align-items: center; 
+}
+#mark-as-read {
+  margin-right: 0; 
+  margin-left: auto;
+  color: rgb(68, 47, 255);
+}
+#num-of-notification{
+background-color: rgb(24, 142, 60);
+color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 600;
+height: 30px;
+border-radius: 2rem;
+margin-left: 15px;
+padding: 15px;
+
+}
+#mark-as-read:hover{
+color: chocolate;
+float: inline-end;
+}
+main{
+  display:flex;
+  flex-direction: column;
+}
+.notificationCard{
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 10px;
+  outline: solid black;
+  background-color: #fff;
+
+
+}
+.notificationCard .description{
+  margin-left: 10px;
+  display: inline-block;
+  justify-content: space-between;
+  flex-direction: row;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.notificationCard.unread .description {
+  cursor: pointer;
+}
+#notification-list {
+/* background-image: url(./Assets/backimg.png); */
+}
+#notification-list .unread-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0px 0px 1px 7px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.notificationCard.read .description {
+  cursor: default; 
+}
+.unread{
+  background-color: #e6e6a0;
+}
+.unread:hover{
+  background-color:rgb(234, 233, 227) ;
+}
+.read{
+  background-color: rgb(234, 233, 227);
+  outline: #e6e6a0;
+}
+.profImg{
+  background-image: url(../Assets/backimg.png);
+
+}
