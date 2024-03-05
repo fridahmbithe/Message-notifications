@@ -1,68 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/png" sizes="32x32" />
+		<link rel="stylesheet" href="messages.css" />
+		<title>Messages</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" >
-    <link rel="stylesheet" href="messages.css">
-
-<body>
-    <section class="msger">
-        <main class="msger-chat">
-            <div class="msg left-msg">
-                <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)">
-                </div>
-                <div class="msg-bubble" id="message-item">
-                    <!-- this is where the message clicked will be dsplayed just reference the id -->
-                </div>
-            </div>
-        </main>
-        <form class="msger-inputarea">
-            <input type="text" class="msger-input" placeholder="Enter your message...">
-            <button type="submit" class="msger-send-btn">Send</button>
-          </form>
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const messageForm = document.getElementById('message-form');
-            const messageText = document.getElementById('message-text');
-            const messageList = document.getElementById('message-item');
-
-            // Extract message content from URL the notifications window
-            const urlParams = new URLSearchParams(window.location.search);
-            const messageContent = urlParams.get('message');
-            if (messageContent) {
-                displayMessage(messageContent);
-            }
-            // Function to display a received message
-            function displayMessage(message) {
-                const messageItem = document.createElement('div');
-                messageItem.classList.add('message-item');
-                messageItem.textContent = message;
-                messageList.appendChild(messageItem);
-            }
-            console.log("this is the ", messageItem);
-
-            // Function to send a message
-            messageForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const newMessage = messageText.value;
-                if (newMessage.trim() !== '') {
-                    displayMessage(newMessage);
-                    messageText.value = '';
-                } else {
-                    alert('Please enter a message.');
-                }
-            });
-            console.log(newMessage);
-
-
+	<body>
+		<section class="msger">
+			<main class="msger-chat" id="msgs-container"></main>
+			<form class="msger-inputarea" id="message-form" enctype="multipart/form-data">
+                <input
+                    type="text"
+                    class="msger-input"
+                    id="message-text"
+                    placeholder="Enter your message..."
+                />
+                <input
+                    type="file"
+                    id="file-input"
+                    accept="image/*, .pdf, .doc, .docx, .xls, .xlsx"
+                    style="display: none;" 
+                />
+                <label for="file-input"> choose
+                    <i class="fas fa-paperclip"></i> <!-- You can use an icon for the attachment button -->
+                </label>
+                <button type="submit" class="msger-send-btn">Send</button>
+            </form>
             
-        });
-    </script>
+		</section>
 
-</body>
+		<script>
+			function displayMessage(messageText, isSentByUser) {
+				const messageItem = document.createElement("div");
+				messageItem.classList.add("msg");
 
+				// Apply different styling based on whether the message was sent by the user
+				if (isSentByUser) {
+					messageItem.classList.add("right-msg");
+					// messageItem.style.backgroundImage = "url('./Assets/chatimg.png')";
+				} else {
+					messageItem.classList.add("left-msg");
+					messageItem.style.backgroundImage = "url('./Assets/backimg1.png')";
+				}
+
+				// Create the message bubble
+				const msgBubble = document.createElement("div");
+				msgBubble.classList.add("msg-bubble");
+				msgBubble.innerText = messageText;
+
+				// Append the message bubble to the message item
+				messageItem.appendChild(msgBubble);
+
+				// Append the message item to the message list container
+				const messageList = document.getElementById("msgs-container");
+				messageList.appendChild(messageItem);
+			}
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const urlParams = new URLSearchParams(window.location.search);
+				const messageContent = urlParams.get("message");
+
+				// checking message contents
+				const messages = messageContent
+					? [JSON.parse(decodeURIComponent(messageContent))]
+					: [];
+				const messageList = document.getElementById("msgs-container");
+
+				messages.forEach((message) => {
+					const messageItem = document.createElement("div");
+					messageItem.classList.add("msg");
+					// Assuming all messages from URL are 'received' messages
+					messageItem.classList.add("left-msg");
+
+					const imgContainer = document.createElement("div");
+					imgContainer.classList.add("msg-img");
+					imgContainer.style.backgroundImage = "url('./Assets/backimg1.png')";
+
+					const msgBubble = document.createElement("div");
+					msgBubble.classList.add("msg-bubble");
+					msgBubble.innerText = message.content; // Extract and display the content
+
+					// Append imgContainer and msgBubble to messageItem, not setting textContent directly to messageItem
+					messageItem.appendChild(imgContainer);
+					messageItem.appendChild(msgBubble);
+
+					// Append messageItem to messageList
+					messageList.appendChild(messageItem);
+				});
+
+				const messageForm = document.getElementById("message-form");
+				const messageText = document.getElementById("message-text");
+
+				messageForm.addEventListener("submit", function (e) {
+					e.preventDefault();
+					const newMessage = messageText.value.trim();
+					if (newMessage !== "") {
+						displayMessage(newMessage, true);
+						messageText.value = "";
+						// localStorage.setItem('lastMessage', newMessage);
+					} else {
+						alert("Please enter a message.");
+					}
+				});
+			});
+		</script>
+	</body>
 </html>
